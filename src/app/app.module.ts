@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
@@ -9,6 +9,11 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
+import { AuthInterceptor } from './auth/services/authintercepter.service';
+import { GlobalFeedsModule } from './feed/global/global.module';
+import { PersistanceService } from './shared/services/persistance.service';
+import { TopBarModule } from './shared/topbar/topbar.module';
+import { FeedModule } from './feed/feed/feed.module';
 
 @NgModule({
   declarations: [
@@ -24,9 +29,13 @@ import { AuthModule } from './auth/auth.module';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),TopBarModule,GlobalFeedsModule,FeedModule
   ],
-  providers: [],
+  providers: [PersistanceService,{
+    provide:HTTP_INTERCEPTORS,
+    useClass:AuthInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

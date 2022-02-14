@@ -1,0 +1,33 @@
+<div *ngIf="isLoading$|async">
+    Loading ...
+</div>
+
+<div *ngIf="error$|async">
+    Backend Services Busy ...It is not you, It is Us !
+</div>
+
+<div *ngIf="data$|async">
+    <div class="article-preview" *ngFor="let article of (data$|async)?.articles">
+        <div class="article-meta">
+            <a [routerLink]="['/profiles',article.author.username]">
+                <img [src]="article.author.image"/>
+            </a>
+            <div class="info">
+                <a [routerLink]="['/profiles',article.author.username]" class="author">
+                   {{article.author.username}}
+                </a>
+                <span class="date">{{article.createdAt}}</span>
+            </div>
+            <div class="pull-xs-right">
+                add to fav
+            </div>
+        </div>
+        <a [routerLink]="['/articles',article.slug]" class="preview-link">
+           <h1>{{article.title}}</h1>
+           <p>{{article.description}}</p>
+           <span>Read More..</span>
+           here list of tags
+         </a>
+    </div>
+    PAGINATION
+</div>

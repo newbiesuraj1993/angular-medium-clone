@@ -9,17 +9,21 @@ import { AuthService } from './services/auth.service';
 import { EffectsModule } from '@ngrx/effects';
 import { Effect } from './store/effects';
 import { BackEndErrorModule } from '../backenderror/backenderror.module';
+import { PersistanceService } from '../shared/services/persistance.service';
+import { LoginComponent } from './components/register/login/login.component';
 
 const routes: Routes = [
 {
-  path:'register', component: RegisterComponent
+  path:'register', component: RegisterComponent,
+},
+{
+  path:'login', component: LoginComponent,
 }
 ];
-
-
 @NgModule({
   declarations: [
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule, 
@@ -29,6 +33,6 @@ const routes: Routes = [
     EffectsModule.forFeature([Effect]),
     BackEndErrorModule
   ],
-  providers:[AuthService]
+  providers:[AuthService,PersistanceService]
 })
 export class AuthModule { }
